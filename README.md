@@ -7,5 +7,12 @@
 :exclamation: If you find this repository helpful, please consider giving it a :star:. Thanks! :exclamation:
 
 ## Introduction
-An SQL analysis of reported crimes in the city of Chicago and the average daily temperature between 2018 and 2023.
+An SQL analysis of Zomato sales data between 2017 and 2020.
 
+
+## Datasets used
+- <strong>food.csv</strong>: details about food.
+- <strong>menu.csv</strong>: all menu data.
+- <strong>orders.csv</strong>: order details.
+- <strong>restaurant.csv</strong>: restaurants data.
+- <strong>user.csv</strong>: users data.
