@@ -309,8 +309,6 @@ ORDER BY YEAR(order_date), MONTH(order_date) ASC;
 
 
 
-----------------------------------
-
 **7.**  Average Order Value:
 
 ````sql
@@ -329,6 +327,7 @@ FROM #temp_data
 GROUP BY rest_name
 ORDER BY total_sales_revenue DESC;
 ````
+----------------------------------
 
 --------------------------######################################## Customer Analysis:
 
@@ -402,11 +401,10 @@ SELECT
     END AS age_group,gender
 FROM 
     #temp_data)
-````
-
 select age_group,gender,count(gender) as counts from cte
 group by age_group,gender
-
+````
+----------------------------------
 --------------------------######################################## Pricing Analysis:
 
 
