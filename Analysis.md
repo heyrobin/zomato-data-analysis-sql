@@ -42,6 +42,8 @@ SELECT TOP 10
 FROM 
     data;
 
+````
+
 **Results:**
 
 | Order Date          | Sales Qty | Sales Amount | Currency | Restaurant Name            | Email                   | Age | Gender | Marital Status | Occupation    | Monthly Income   | Educational Qualifications | Family Size | User Name       | City   | Rating | Rating Count | Cost  | Cuisine                 |
@@ -53,7 +55,7 @@ FROM
             |
 
 
-````
+
 
 -- we have added restraunt and user data into the order table using the cte 
 -- lets do checking for missing values and data cleaning and pre-processing
