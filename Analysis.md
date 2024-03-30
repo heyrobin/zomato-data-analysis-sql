@@ -11,10 +11,12 @@
 **1.**  List the total number of reported crimes between 2018 and 2023?
 
 ````sql
-SELECT 
-	to_char(count(*), '9g999g999') AS "Total Reported Crimes"
-FROM 
-	chicago.crimes;
+select * from orders o join users u on o.user_id = u.user_id join restaurant r on r.id = o.r_id;
+with data as (
+select order_date,sales_qty,sales_amount,currency,r.name as rest_name,email,age,gender,Marital_Status,Occupation,Monthly_Income,Educational_Qualifications,Family_size,u.name as user_name,city,rating,rating_count,cost,cuisine 
+from orders o join users u on o.user_id = u.user_id join restaurant r on r.id = o.r_id)
+select top 10 * from data;
+
 ````
 
 **Results:**
