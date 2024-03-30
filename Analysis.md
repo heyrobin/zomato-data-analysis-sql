@@ -232,6 +232,57 @@ ORDER BY age;
 
 
 
+**4.**  Total Sales Revenue of year 2019
+
+````sql
+SELECT 
+    DATENAME(MONTH, order_date) AS month,
+    SUM(sales_amount) AS total_sales
+FROM #temp_data
+WHERE YEAR(order_date) = 2019
+GROUP BY DATENAME(MONTH, order_date), MONTH(order_date)
+ORDER BY MONTH(order_date) ASC;
+````
+
+**Results:**
+
+|   Month   | Total Sales |
+|-----------|-------------|
+|  January  |  30766072   |
+| February  |  26438028   |
+|   March   |  27387931   |
+|   April   |  26810140   |
+|    May    |  27860646   |
+|   June    |  25178015   |
+|   July    |  34909292   |
+|  August   |  31945288   |
+| September |  24880596   |
+|  October  |  26449670   |
+| November  |  26267629   |
+| December  |  22453862   |
+
+**5.**  Top-selling items or cuisines:
+
+````sql
+SELECT 
+    cuisine,
+    SUM(sales_qty) AS total_sales_quantity,
+    SUM(sales_amount) AS total_sales_revenue
+FROM #temp_data
+GROUP BY cuisine
+ORDER BY total_sales_revenue DESC;
+````
+
+**Results:**
+
+|     Cuisine           | Total Sales Quantity | Total Sales Revenue |
+|-----------------------|----------------------|---------------------|
+| North Indian,Chinese  |         121654       |       44956268      |
+| Indian                |          98522       |       42626090      |
+| North Indian          |          91190       |       33670996      |
+| Chinese               |          77833       |       27259296      |
+| Indian,Chinese        |          73516       |       25738592      |
+
 
 
 To be continued....
