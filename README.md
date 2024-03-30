@@ -8,7 +8,7 @@
 
 ## Introduction
 An SQL analysis of Zomato sales data between 2017 and 2020.
-* [Data Analysis Question & Answers](./analysis.md)
+* [CHEKCK THE ANALYSIS HERE](./Analysis.md)
 
 
 ## Datasets used
