@@ -317,6 +317,13 @@ SELECT
 FROM #temp_data;
 ````
 
+**Results:**
+
+| Average Order Value |
+|---------------------|
+|        6486         |
+
+
 **8.** top 10 Sales Contribution by Restaurants:
 
 ````sql
@@ -327,6 +334,23 @@ FROM #temp_data
 GROUP BY rest_name
 ORDER BY total_sales_revenue DESC;
 ````
+
+**Results:**
+
+|              Restaurant Name             | Total Sales Revenue |
+|------------------------------------------|---------------------|
+|           Domino's Pizza                |       5025266       |
+| Kouzina Kafe - The Food Court           |       1958408       |
+| Sweet Truth - Cake and Desserts         |       1952881       |
+|               Pizza Hut                  |       1792693       |
+|             Biryani House                |       1711064       |
+|            Huber & Holly                 |       1668292       |
+|            Baskin Robbins                |       1627731       |
+|                   KFC                    |       1605569       |
+|      McCafe by McDonald's               |       1541849       |
+|              Janta Snacks                |       1510944       |
+
+
 ----------------------------------
 
 --------------------------######################################## Customer Analysis:
@@ -347,6 +371,16 @@ GROUP BY age, gender, marital_status, occupation, educational_qualifications
 ORDER BY age;
 ````
 
+**Results:**
+
+| Age | Gender | Marital Status | Occupation | Educational Qualifications | Customer Count |
+|-----|--------|----------------|------------|----------------------------|----------------|
+|  18 |  Male  |     Single     |  Student   |          Graduate          |      383       |
+|  19 | Female |     Single     |  Student   |          Graduate          |      416       |
+|  19 |  Male  |     Single     |  Student   |          Graduate          |     1163       |
+|  20 | Female |     Single     |  Student   |          Graduate          |      778       |
+
+
 
 **10.** Customer Retention Rates:
 -- Calculate customer retention rates over time to understand how many customers return to make repeat purchases:
@@ -359,6 +393,22 @@ FROM #temp_data
 GROUP BY  CONVERT(varchar(7), order_date, 120)
 ORDER BY month;
 ````
+**Results:**
+
+|  Month  | Returning Customers |
+|---------|---------------------|
+| 2017-10 |        4049         |
+| 2017-11 |        5146         |
+| 2017-12 |        4678         |
+| 2018-01 |        4950         |
+| 2018-02 |        4709         |
+| 2018-03 |        4900         |
+| 2018-04 |        4813         |
+| 2018-05 |        4956         |
+| 2018-06 |        5172         |
+| 2018-07 |        5059         |
+
+
 
 
 **11.** Average Order Frequency:
@@ -374,6 +424,17 @@ GROUP BY user_name
 ORDER BY total_orders DESC;
 ````
 
+**Results:**
+
+|   User Name    | Total Orders | Avg Order Frequency |
+|----------------|--------------|---------------------|
+|  David Smith   |      64      |          2          |
+| Michael Brown  |      62      |          1          |
+| Michael Smith  |      50      |          1          |
+| Robert Smith   |      48      |          1          |
+| Michael Miller |      47      |          1          |
+
+
 **12.** Customer Lifetime Value (CLV):
 -- Estimate the CLV for each customer to understand their long-term value to the business:
 
@@ -387,6 +448,17 @@ FROM #temp_data
 GROUP BY user_name
 ORDER BY total_sales_amount DESC;
 ````
+
+**Results:**
+
+|    User Name     | Total Sales Amount | Total Orders | Avg Order Value |
+|------------------|--------------------|--------------|-----------------|
+|  Amanda Ballard  |       1514634      |       3      |      504878     |
+|  Gina Carpenter  |       1496625      |       4      |      374156     |
+| Jonathan Vasquez |       1479283      |       5      |      295856     |
+|   Lisa Aguirre   |       1478074      |       4      |      369518     |
+|    Brian White   |       1366985      |      14      |       97641     |
+
 
 **13.** Segmentation Analysis:
 ---Segment customers based on their characteristics or behavior and analyze their purchasing patterns:
@@ -404,6 +476,17 @@ FROM
 select age_group,gender,count(gender) as counts from cte
 group by age_group,gender
 ````
+
+**Results:**
+
+|  Age Group   | Gender |  Counts |
+|--------------|--------|---------|
+|     Young    |  Male  |  76268  |
+| Middle-aged  | Female |  4197   |
+|     Young    | Female |  59475  |
+| Middle-aged  |  Male  |  8724   |
+
+
 ----------------------------------
 --------------------------######################################## Pricing Analysis:
 
@@ -423,6 +506,22 @@ GROUP BY cuisine
 ORDER BY average_price DESC;
 ````
 
+**Results:**
+
+|        Cuisine         | Average Price | Min Price | Max Price |
+|------------------------|---------------|-----------|-----------|
+| Sri Lankan,Seafood    |    3500.00    |  3500.00  |  3500.00  |
+| Japanese,Mughlai      |    3000.00    |  3000.00  |  3000.00  |
+| Seafood,Pastas        |    2000.00    |  2000.00  |  2000.00  |
+| Goan,Italian          |    2000.00    |  2000.00  |  2000.00  |
+| Asian,Turkish         |    2000.00    |  2000.00  |  2000.00  |
+| Turkish,European      |    1800.00    |  1800.00  |  1800.00  |
+| Salads,Seafood        |    1600.00    |  1600.00  |  1600.00  |
+| Bakery,Turkish        |    1600.00    |  1600.00  |  1600.00  |
+| Greek,Salads          |    1600.00    |  1600.00  |  1600.00  |
+| Thai,Indonesian       |    1600.00    |  1600.00  |  1600.00  |
+
+
 
 **15.**  Price vs. Sales Performance:
 --- Analyze the relationship between pricing and sales performance to identify optimal price points:
@@ -437,6 +536,17 @@ GROUP BY cuisine
 ORDER BY total_sales_revenue DESC;
 ````
 
+**Results:**
+
+|     Cuisine          | Average Price | Total Sales Revenue |
+|----------------------|---------------|---------------------|
+| North Indian,Chinese|    365.0021   |       44956268      |
+| Indian               |    263.9397   |       42626090      |
+| North Indian         |    272.9893   |       33670996      |
+| Chinese              |    266.6719   |       27259296      |
+| Indian,Chinese       |    318.7485   |       25738592      |
+
+
 **16.** Price Elasticity:
 --- Estimate price elasticity to understand how changes in price impact sales volume:
 
@@ -449,6 +559,17 @@ FROM #temp_data
 GROUP BY cuisine
 ORDER BY total_sales_quantity DESC;
 ````
+
+**Results:**
+
+|     Cuisine          | Average Price | Total Sales Quantity |
+|----------------------|---------------|----------------------|
+| North Indian,Chinese|    365.0021   |        121654        |
+| Indian               |    263.9397   |         98522        |
+| North Indian         |    272.9893   |         91190        |
+| Chinese              |    266.6719   |         77833        |
+| Indian,Chinese       |    318.7485   |         73516        |
+
 
 **17.** Price Tier Analysis:
 --- Segment items or cuisines into price tiers and analyze sales performance within each tier:
@@ -469,6 +590,15 @@ select price_tier ,count(*) as item_count ,sum(sales_qty) as total_sales_quantit
 group by price_tier
 
 ````
+
+**Results:**
+
+| Price Tier | Item Count | Total Sales Quantity |
+|------------|------------|----------------------|
+|    High    |   124917   |       2051153        |
+|     Low    |    1519    |         22248        |
+|   Medium   |   22228    |        358030        |
+
 
 
 
