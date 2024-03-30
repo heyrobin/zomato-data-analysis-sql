@@ -130,13 +130,15 @@ select top 10 * from data
 
 ````sql
 ALTER TABLE orders
-ALTER COLUMN order_date DATETIME;````
+ALTER COLUMN order_date DATETIME;
+````
 
 -- there are problem with currency columns that there are diffrent inr 
 
 ````sql
 select currency from #temp_data
-group by currency````
+group by currency
+````
 
 -- there are problem with currency columns that there are diffrent inr 
 
@@ -189,7 +191,8 @@ SELECT
     COUNT(*) AS frequency
 FROM #temp_data
 GROUP BY age
-ORDER BY age;````
+ORDER BY age;
+````
 
 
 
