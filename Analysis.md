@@ -309,6 +309,169 @@ ORDER BY YEAR(order_date), MONTH(order_date) ASC;
 
 
 
+----------------------------------
+
+**7.**  Average Order Value:
+
+````sql
+SELECT 
+    AVG(sales_amount) AS average_order_value
+FROM #temp_data;
+````
+
+**8.** top 10 Sales Contribution by Restaurants:
+
+````sql
+SELECT top 10
+    rest_name,
+    SUM(sales_amount) AS total_sales_revenue
+FROM #temp_data
+GROUP BY rest_name
+ORDER BY total_sales_revenue DESC;
+````
+
+--------------------------######################################## Customer Analysis:
+
+**9.** .Customer Demographics:
+-- Analyze the distribution of customers by demographics such as age, gender, marital status, occupation, and educational qualifications:
+
+````sql
+SELECT 
+    age,
+    gender,
+    marital_status,
+    occupation,
+    educational_qualifications,
+    COUNT(*) AS customer_count
+FROM #temp_data
+GROUP BY age, gender, marital_status, occupation, educational_qualifications
+ORDER BY age;
+````
+
+
+**10.** Customer Retention Rates:
+-- Calculate customer retention rates over time to understand how many customers return to make repeat purchases:
+
+````sql
+SELECT 
+    CONVERT(varchar(7), order_date, 120) AS month,
+    COUNT(DISTINCT user_name) AS returning_customers
+FROM #temp_data
+GROUP BY  CONVERT(varchar(7), order_date, 120)
+ORDER BY month;
+````
+
+
+**11.** Average Order Frequency:
+-- Calculate the average frequency of orders per customer to understand their buying behavior:
+
+````sql
+SELECT 
+    user_name,
+    COUNT(*) AS total_orders,
+    COUNT(*) / NULLIF(DATEDIFF(MONTH, MIN(order_date), MAX(order_date)), 0) AS avg_order_frequency
+FROM #temp_data
+GROUP BY user_name
+ORDER BY total_orders DESC;
+````
+
+**12.** Customer Lifetime Value (CLV):
+-- Estimate the CLV for each customer to understand their long-term value to the business:
+
+````sql
+SELECT 
+    user_name,
+    SUM(sales_amount) AS total_sales_amount,
+    COUNT(*) AS total_orders,
+    SUM(sales_amount) / COUNT(*) AS avg_order_value
+FROM #temp_data
+GROUP BY user_name
+ORDER BY total_sales_amount DESC;
+````
+
+**13.** Segmentation Analysis:
+---Segment customers based on their characteristics or behavior and analyze their purchasing patterns:
+
+````sql
+with cte as (
+SELECT 
+    CASE 
+        WHEN age < 30 THEN 'Young'
+        WHEN age >= 30 AND age < 50 THEN 'Middle-aged'
+        ELSE 'Elderly'
+    END AS age_group,gender
+FROM 
+    #temp_data)
+````
+
+select age_group,gender,count(gender) as counts from cte
+group by age_group,gender
+
+--------------------------######################################## Pricing Analysis:
+
+
+**14.**  rice Distribution:
+
+---Calculate the distribution of prices for different items or cuisines:
+
+````sql
+SELECT top 10
+    cuisine,
+    AVG(cost) AS average_price,
+    MIN(cost) AS min_price,
+    MAX(cost) AS max_price
+FROM #temp_data
+GROUP BY cuisine
+ORDER BY average_price DESC;
+````
+
+
+**15.**  Price vs. Sales Performance:
+--- Analyze the relationship between pricing and sales performance to identify optimal price points:
+
+````sql
+SELECT 
+    cuisine,
+    AVG(cost) AS average_price,
+    SUM(sales_amount) AS total_sales_revenue
+FROM #temp_data
+GROUP BY cuisine
+ORDER BY total_sales_revenue DESC;
+````
+
+**16.** Price Elasticity:
+--- Estimate price elasticity to understand how changes in price impact sales volume:
+
+````sql
+SELECT 
+    cuisine,
+    AVG(cost) AS average_price,
+    SUM(sales_qty) AS total_sales_quantity
+FROM #temp_data
+GROUP BY cuisine
+ORDER BY total_sales_quantity DESC;
+````
+
+**17.** Price Tier Analysis:
+--- Segment items or cuisines into price tiers and analyze sales performance within each tier:
+
+````sql
+with cte as 
+
+(
+SELECT 
+    CASE 
+        WHEN cost < 100 THEN 'Low'
+        WHEN cost >= 100 AND cost < 200 THEN 'Medium'
+        ELSE 'High' END AS price_tier
+, sales_qty
+from #temp_data)
+
+select price_tier ,count(*) as item_count ,sum(sales_qty) as total_sales_quantity from cte
+group by price_tier
+
+````
+
 
 
 
