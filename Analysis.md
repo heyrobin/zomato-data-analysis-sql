@@ -52,7 +52,7 @@ FROM
 | 2018-05-08 00:00:00 | 3         | -1           | INR      | Janta Sweet House          | tonidecker@example.net | 23  | Male   | Single         | Student       | More than 50000 | Post Graduate              | 3           | Dana Reeves     | Abohar | 4.4    | 50+ ratings    | 200.00| Sweets,Bakery           |
 | 2018-04-06 00:00:00 | 1         | 875          | INR      | theka coffee desi          | vritter@example.org    | 24  | Male   | Married        | Employee      | More than 50000 | Post Graduate              | 3           | Donald Anderson | Abohar | 3.8    | 100+ ratings   | 100.00| Beverages               |
 | 2018-04-11 00:00:00 | 1         | 583          | INR      | Singh Hut                  | rodriguezjessica@example.net | 22 | Male   | Single         | Student       | Below Rs.10000  | Post Graduate              | 3           | Scott Cruz      | Abohar | 3.7    | 20+ ratings    | 250.00| Fast Food,Indian        |
-            |
+
 
 
 
