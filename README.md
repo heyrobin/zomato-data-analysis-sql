@@ -16,3 +16,8 @@ An SQL analysis of Zomato sales data between 2017 and 2020.
 - <strong>orders.csv</strong>: order details.
 - <strong>restaurant.csv</strong>: restaurants data.
 - <strong>user.csv</strong>: users data.
+
+## Entity Relationship Diagram
+![alt text](./images/ERD.PNG)
+
+:exclamation: If you find this repository helpful, please consider giving it a :star:. Thanks! :exclamation:
