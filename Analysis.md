@@ -285,6 +285,33 @@ ORDER BY total_sales_revenue DESC;
 
 
 
+**6.**  Sales Trends Over Time:
+
+````sql
+SELECT 
+    YEAR(order_date) AS year,
+    DATENAME(MONTH, order_date) AS month,
+    SUM(sales_amount) AS total_sales
+FROM #temp_data
+GROUP BY YEAR(order_date), DATENAME(MONTH, order_date), MONTH(order_date)
+ORDER BY YEAR(order_date), MONTH(order_date) ASC;
+````
+
+**Results:**
+
+|  Year |  Month   | Total Sales |
+|-------|----------|-------------|
+|  2017 | October  |  25257207   |
+|  2017 | November |  33374480   |
+|  2017 | December |  30659375   |
+|  2018 | January  |  41751115   |
+|  2018 | February |  34280116   |
+
+
+
+
+
+
 To be continued....
 
 :exclamation: If you find this repository helpful, please consider giving it a :star:. Thanks! :exclamation:
