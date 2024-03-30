@@ -54,14 +54,75 @@ FROM
 | 2018-04-11 00:00:00 | 1         | 583          | INR      | Singh Hut                  | rodriguezjessica@example.net | 22 | Male   | Single         | Student       | Below Rs.10000  | Post Graduate              | 3           | Scott Cruz      | Abohar | 3.7    | 20+ ratings    | 250.00| Fast Food,Indian        |
 
 
+-- we have added restraunt and user data into the order table using the cte but in order to keep everything small we have created a 1 combined temp table
+
+````
+select * into #temp_data
+FROM (
+    SELECT 
+        order_date,
+        sales_qty,
+        sales_amount,
+        currency,
+        r.name AS rest_name,
+        email,
+        age,
+        gender,
+        Marital_Status,
+        Occupation,
+        Monthly_Income,
+        Educational_Qualifications,
+        Family_size,
+        u.name AS user_name,
+        city,
+        rating,
+        rating_count,
+        cost,
+        cuisine 
+    FROM 
+        orders o 
+        JOIN users u ON o.user_id = u.user_id 
+        JOIN restaurant r ON r.id = o.r_id
+) AS zom_db;
+````
+````
+select * from #temp_data;
+````
+
+Lets do checking for missing values and data cleaning and pre-processing
+
+-- lets make it short and make using dynamic SQL
+````
+DECLARE @columns NVARCHAR(MAX)
+DECLARE @query NVARCHAR(MAX)
+
+SELECT @columns = STRING_AGG('COUNT(' + QUOTENAME(column_name) + ') AS ' + column_name, ', ')
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'orders'
+
+SET @query = 'SELECT ' + @columns + ' FROM orders'
+
+EXEC sp_executesql @query
+````
 
 
 
--- we have added restraunt and user data into the order table using the cte 
--- lets do checking for missing values and data cleaning and pre-processing
+
+Checking for missing values 
+
+````
+with data as (
+select order_date,sales_qty,sales_amount,currency,r.name as rest_name,email,age,gender,Marital_Status,Occupation,Monthly_Income,Educational_Qualifications,Family_size,u.name as user_name,city,rating,rating_count,cost,cuisine 
+from orders o join users u on o.user_id = u.user_id join restaurant r on r.id = o.r_id)
+select top 10 * from data ````
+
+**Results:**
+
+| Order Date | Sales Qty | Sales Amount | Currency | Restaurant ID | User ID |
+|------------|-----------|--------------|----------|---------------|---------|
+|   150281   |   150281  |    150281    |   150281 |     148664    |  150281 |
 
 
-**1.**  List the total number of reported crimes between 2018 and 2023?
 
 ````sql abc
 ````
@@ -72,6 +133,71 @@ FROM
 Total Reported Crimes| Total Reported Crimes|
 ---------------------|----------------------|
  1,450,979           |  1,450,979           |
+
+
+-- Convert Data Types:
+
+````
+ALTER TABLE orders
+ALTER COLUMN order_date DATETIME;````
+
+-- there are problem with currency columns that there are diffrent inr 
+
+````
+select currency from #temp_data
+group by currency````
+
+-- there are problem with currency columns that there are diffrent inr 
+
+````
+update orders
+set currency = case when currency = 'USD' then 'USD' else 'INR' end;
+
+select currency from orders
+group by currency
+````
+
+**1.**  Summary stats for sales
+
+````
+WITH Mode AS (
+    SELECT TOP 1 sales_amount AS mode
+    FROM #temp_data
+    GROUP BY sales_amount
+    ORDER BY COUNT(sales_amount) DESC
+),
+Median AS (
+    SELECT TOP 1 PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY sales_amount ASC) OVER() AS median
+    FROM #temp_data
+)
+SELECT
+    (SELECT mode FROM Mode) AS mode,
+    (SELECT median FROM Median) AS median,
+    AVG(sales_amount) AS mean,
+    MIN(sales_amount) AS min,
+    MAX(sales_amount) AS maximum
+FROM
+    #temp_data;
+
+````
+
+**2.**  Frequency Analysis:
+
+````
+SELECT 
+    gender,
+    COUNT(*) AS count
+FROM #temp_data
+GROUP BY gender;
+````
+
+**3.**  Distribution Analysis:
+````SELECT 
+    age,
+    COUNT(*) AS frequency
+FROM #temp_data
+GROUP BY age
+ORDER BY age;````
 
 
 
