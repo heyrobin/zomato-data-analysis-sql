@@ -54,7 +54,7 @@ FROM
 | 2018-04-11 00:00:00 | 1         | 583          | INR      | Singh Hut                  | rodriguezjessica@example.net | 22 | Male   | Single         | Student       | Below Rs.10000  | Post Graduate              | 3           | Scott Cruz      | Abohar | 3.7    | 20+ ratings    | 250.00| Fast Food,Indian        |
 
 
--- we have added restraunt and user data into the order table using the cte but in order to keep everything small we have created a 1 combined temp table
+we have added restraunt and user data into the order table using the cte but in order to keep everything small we have created a 1 combined temp table
 
 ````
 select * into #temp_data
@@ -91,7 +91,7 @@ select * from #temp_data;
 
 Lets do checking for missing values and data cleaning and pre-processing
 
--- lets make it short and make using dynamic SQL
+lets make it short and make using dynamic SQL
 ````
 DECLARE @columns NVARCHAR(MAX)
 DECLARE @query NVARCHAR(MAX)
@@ -114,7 +114,9 @@ Checking for missing values
 with data as (
 select order_date,sales_qty,sales_amount,currency,r.name as rest_name,email,age,gender,Marital_Status,Occupation,Monthly_Income,Educational_Qualifications,Family_size,u.name as user_name,city,rating,rating_count,cost,cuisine 
 from orders o join users u on o.user_id = u.user_id join restaurant r on r.id = o.r_id)
-select top 10 * from data ````
+select top 10 * from data 
+
+````
 
 **Results:**
 
@@ -122,17 +124,6 @@ select top 10 * from data ````
 |------------|-----------|--------------|----------|---------------|---------|
 |   150281   |   150281  |    150281    |   150281 |     148664    |  150281 |
 
-
-
-````sql abc
-````
-
-
-**Results:**
-
-Total Reported Crimes| Total Reported Crimes|
----------------------|----------------------|
- 1,450,979           |  1,450,979           |
 
 
 -- Convert Data Types:
