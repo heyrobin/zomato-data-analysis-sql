@@ -56,7 +56,7 @@ FROM
 
 we have added restraunt and user data into the order table using the cte but in order to keep everything small we have created a 1 combined temp table
 
-````
+````sql
 select * into #temp_data
 FROM (
     SELECT 
@@ -85,14 +85,14 @@ FROM (
         JOIN restaurant r ON r.id = o.r_id
 ) AS zom_db;
 ````
-````
+````sql
 select * from #temp_data;
 ````
 
 Lets do checking for missing values and data cleaning and pre-processing
 
 lets make it short and make using dynamic SQL
-````
+````sql
 DECLARE @columns NVARCHAR(MAX)
 DECLARE @query NVARCHAR(MAX)
 
@@ -110,7 +110,7 @@ EXEC sp_executesql @query
 
 Checking for missing values 
 
-````
+````sql
 with data as (
 select order_date,sales_qty,sales_amount,currency,r.name as rest_name,email,age,gender,Marital_Status,Occupation,Monthly_Income,Educational_Qualifications,Family_size,u.name as user_name,city,rating,rating_count,cost,cuisine 
 from orders o join users u on o.user_id = u.user_id join restaurant r on r.id = o.r_id)
@@ -128,19 +128,19 @@ select top 10 * from data
 
 -- Convert Data Types:
 
-````
+````sql
 ALTER TABLE orders
 ALTER COLUMN order_date DATETIME;````
 
 -- there are problem with currency columns that there are diffrent inr 
 
-````
+````sql
 select currency from #temp_data
 group by currency````
 
 -- there are problem with currency columns that there are diffrent inr 
 
-````
+````sql
 update orders
 set currency = case when currency = 'USD' then 'USD' else 'INR' end;
 
@@ -150,7 +150,7 @@ group by currency
 
 **1.**  Summary stats for sales
 
-````
+````sql
 WITH Mode AS (
     SELECT TOP 1 sales_amount AS mode
     FROM #temp_data
@@ -174,7 +174,7 @@ FROM
 
 **2.**  Frequency Analysis:
 
-````
+````sql
 SELECT 
     gender,
     COUNT(*) AS count
@@ -183,7 +183,8 @@ GROUP BY gender;
 ````
 
 **3.**  Distribution Analysis:
-````SELECT 
+````sql
+SELECT 
     age,
     COUNT(*) AS frequency
 FROM #temp_data
